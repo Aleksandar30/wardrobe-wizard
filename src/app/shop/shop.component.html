@@ -1,0 +1,144 @@
+<div fxLayout="rows" fxLayoutAlign="center center">
+    <!-- Name -->
+    <mat-form-field>
+        <input placeholder="Search By Name" matInput type="text" (keyup)="doFilter($any($event.target).value)">
+    </mat-form-field>
+
+    <button mat-icon-button (click)="showFilters = !showFilters">
+        <mat-icon>{{ showFilters ? 'close' : 'filter_list' }}</mat-icon>
+    </button>
+
+    <form fxLayout="column" *ngIf="showFilters" (ngSubmit)="applyFilters()">
+        <!-- Type -->
+        <div fxLayoutGap="15">
+            <mat-form-field>
+                <mat-select placeholder="Filter by Type" [(ngModel)]="typeFilterValue" name="typeFilter">
+                    <mat-option *ngFor="let type of types" [value]="type">{{ type }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <!-- Size -->
+            <mat-form-field>
+                <mat-select placeholder="Filter by Size" [(ngModel)]="sizeFilterValue" name="sizeFilter">
+                    <mat-option *ngFor="let size of sizes" [value]="size">{{ size }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <!-- Manufacturer -->
+            <mat-form-field>
+                <mat-select placeholder="Filter by Manufacturer" [(ngModel)]="manufacturersFilterValue"
+                    name="manuFilter">
+                    <mat-option *ngFor="let manufacturer of manufacturers" [value]="manufacturer">{{ manufacturer
+                        }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <!-- Date -->
+            <mat-form-field>
+                <input matInput [matDatepicker]="picker" name="dateFilter" [(ngModel)]="dateFilterValue"
+                    placeholder="Filter by Date">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <div fxLayoutGap="15" fxFlex="50%"> <!-- Price -->
+            <mat-form-field>
+                <input matInput type="text" name="priceFilterMin" [(ngModel)]="priceFilterMinValue"
+                    placeholder="Min Price">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput type="text" name="priceFilterMax" [(ngModel)]="priceFilterMaxValue"
+                    placeholder="Max Price">
+            </mat-form-field>
+
+            <!-- Rating -->
+            <mat-form-field>
+                <input matInput type="text" name="scoreFilterMin" [(ngModel)]="buyerScoreFilterMinValue"
+                    placeholder="Min Score">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput type="text" name="scoreFilterMax" [(ngModel)]="buyerScoreFilterMaxValue"
+                    placeholder="Max Score">
+            </mat-form-field>
+        </div>
+        <div fxLayoutAlign="center center">
+            <button color="accent" *ngIf="showFilters" mat-raised-button type="submit">Apply Filters</button>
+            <button *ngIf="showFilters" mat-raised-button type="button" style="margin-left: 10px;"
+                (click)="clearFilters()">Clear Filters</button>
+        </div>
+    </form>
+
+</div>
+
+<mat-table matSort [dataSource]="shopItemsSource">
+
+    <!-- Genre -->
+    <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.name }}</mat-cell>
+    </ng-container>
+
+    <!-- type -->
+    <ng-container matColumnDef="type">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Type</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.type }}</mat-cell>
+    </ng-container>
+
+    <!-- Gender -->
+    <ng-container matColumnDef="gender">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Gender</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.gender }}</mat-cell>
+    </ng-container>
+
+    <!-- Size -->
+    <ng-container matColumnDef="size">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Size</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.size }}</mat-cell>
+    </ng-container>
+
+    <!-- manufacturer -->
+    <ng-container matColumnDef="manufacturer">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Manufacturer</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.manufacturer }}</mat-cell>
+    </ng-container>
+
+    <!-- productionDate -->
+    <ng-container matColumnDef="productionDate">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Production Date</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.productionDate | date }}</mat-cell>
+    </ng-container>
+
+    <!-- Price -->
+    <ng-container matColumnDef="price">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Price</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.price | number }}</mat-cell>
+    </ng-container>
+
+    <!-- Buyer Score -->
+    <ng-container matColumnDef="rating">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Rating</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.rating | number }}</mat-cell>
+    </ng-container>
+
+    <!-- Shopping Cart -->
+    <ng-container matColumnDef="shoppingCart">
+        <mat-header-cell *matHeaderCellDef>Shop</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            <button mat-icon-button (click)="openAddToCartDialog(element)">
+                <mat-icon>{{ cartItems.has(element) ? 'edit' : 'shopping_cart' }}</mat-icon>
+            </button>
+            <button mat-icon-button (click)="removeFromCart(element)" *ngIf="cartItems.has(element)">
+                <mat-icon>remove_shopping_cart</mat-icon>
+            </button>
+            <button mat-icon-button (click)="openUserReviewsDialog(element)">
+                <mat-icon>reviews</mat-icon>
+            </button>
+
+        </mat-cell>
+    </ng-container>
+
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let rows; columns: displayedColumns"></mat-row>
+</mat-table>
+
+
+<mat-paginator [pageSize]="5" [pageSizeOptions]="[1, 2, 4, 6, 10]"></mat-paginator>

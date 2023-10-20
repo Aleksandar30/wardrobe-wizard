@@ -1,0 +1,29 @@
+<section>
+    <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px" #f="ngForm" (ngSubmit)="onSubmit(f)">
+        <p>Login</p>
+        <!-- Korisnicko ime i error hintovi -->
+        <mat-form-field>
+            <input type="email" matInput placeholder="Your email" ngModel name="email" email required
+                #emailInput="ngModel">
+            <mat-error *ngIf="emailInput.hasError('required')">Field should not be empty</mat-error>
+            <mat-error *ngIf="!emailInput.hasError('required')">Please use the correct email format.</mat-error>
+        </mat-form-field>
+
+        <!-- Sifra i string interpolation -->
+        <mat-form-field hintLabel="Please enter minimum 8 characters.">
+            <input type="password" matInput placeholder="Your password" ngModel name="password" required minlength="8"
+                #passInput="ngModel">
+            <mat-hint align="end">{{ passInput.value?.length }} / 8</mat-hint>
+        </mat-form-field>
+
+        <!-- Potvrda forme -->
+        <button fxLayoutGap="20px" type="submit" mat-raised-button color="primary"
+            [disabled]="f.invalid">Submit</button>
+        <mat-label *ngIf="errorExists">{{ errorText }}</mat-label>
+        <a routerLink="/register">I do not have an account.</a>
+    </form>
+
+
+
+
+</section>

@@ -1,0 +1,44 @@
+<button mat-button [mat-dialog-close]="true">
+    <mat-icon matListIcon>close</mat-icon>
+</button>
+<mat-dialog-content>
+    <h2 mat-dialog-title>Reviews for {{ data.item.name }}</h2>
+    <h2> {{ formattedAverageScore }}</h2>
+    <table mat-table [dataSource]="data.item.userReviews">
+        <ng-container matColumnDef="review">
+            <mat-header-cell *matHeaderCellDef>Reviews</mat-header-cell>
+            <mat-cell *matCellDef="let review">{{ review.text }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="score">
+            <mat-header-cell *matHeaderCellDef>Buyer Score</mat-header-cell>
+            <mat-cell *matCellDef="let review">{{ review.score }}</mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="['review', 'score']"></mat-header-row>
+        <mat-row *matRowDef="let review; columns: ['review', 'score']"></mat-row>
+    </table>
+    <form *ngIf="userService.currentUser" fxLayout="column" fxLayoutGap="2vh" #editForm="ngForm"
+        (ngSubmit)="addReview(editForm)">
+        <!-- Email -->
+        <mat-card>
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1vw">
+
+                <mat-form-field>
+                    <input matInput type="text" placeholder="Text" ngModel name="text" required #textInput="ngModel">
+                    <mat-hint align="end">Name</mat-hint>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1vw">
+
+                <mat-form-field>
+                    <input matInput type="number" placeholder="Score" ngModel name="score" required
+                        #textInput="ngModel">
+                    <mat-hint align="end">Score</mat-hint>
+                </mat-form-field>
+            </div>
+            <button mat-raised-button color="primary" type="submit">Add Review</button>
+        </mat-card>
+    </form>
+
+</mat-dialog-content>

@@ -1,0 +1,75 @@
+<!-- 
+    FlexLayout
+    https://github.com/angular/flex-layout/wiki/Declarative-API-Overview
+ -->
+
+<section>
+    <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px" #f="ngForm" (ngSubmit)="onSubmit(f)">
+        <p>Register</p>
+
+        <div fxLayoutGap="15px">
+            <!-- NAME -->
+            <mat-form-field>
+                <mat-hint align="end">Name</mat-hint>
+                <input type="text" matInput placeholder="Your name" ngModel name="name" required #nameInput="ngModel">
+                <mat-error *ngIf="nameInput.hasError('required')">Field should not be empty</mat-error>
+            </mat-form-field>
+            <!-- LAST NAME -->
+            <mat-form-field>
+                <mat-hint align="end">Last Name</mat-hint>
+                <input type="text" matInput placeholder="Your last name" ngModel name="lastname" required
+                    #lastNameInput="ngModel">
+                <mat-error *ngIf="lastNameInput.hasError('required')">Field should not be empty</mat-error>
+            </mat-form-field>
+        </div>
+        <div fxLayoutGap="15px">
+            <!-- ADRESS -->
+            <mat-form-field>
+                <mat-hint align="end">Address</mat-hint>
+                <input type="text" matInput placeholder="Your address" ngModel name="address" required
+                    #adressInput="ngModel">
+                <mat-error *ngIf="adressInput.hasError('required')">Field should not be empty</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-hint align="end">Favorite Clothing Type</mat-hint>
+                <mat-select placeholder="Favorite Type" ngModel name="type">
+                    <mat-option *ngFor="let type of types" [value]="type">{{ type }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+
+        </div>
+        <div fxLayoutAlign="start center" fxLayoutGap="15px">
+            <mat-form-field hintLabel="Password ">
+                <input type="password" matInput placeholder="Your password" ngModel name="password" required
+                    minlength="8" #passInput="ngModel">
+                <mat-hint align="end">{{ passInput.value?.length }} / 8</mat-hint>
+            </mat-form-field>
+
+            <!-- EMAIL -->
+            <mat-form-field>
+                <mat-hint align="end">Email</mat-hint>
+                <input type="email" matInput placeholder="Your email" ngModel name="email" email required
+                    #emailInput="ngModel">
+                <mat-error *ngIf="emailInput.hasError('required')">Field should not be empty</mat-error>
+                <mat-error *ngIf="!emailInput.hasError('required')">Please use the correct email format.</mat-error>
+            </mat-form-field>
+
+
+
+        </div>
+        <button fxLayoutGap="125px" type="submit" mat-raised-button color="primary"
+            [disabled]="f.invalid">Submit</button>
+
+
+
+
+
+
+        <mat-label *ngIf="errorExists">{{ errorText }}</mat-label>
+        <a routerLink="/login">Already an user? Login Here</a>
+
+
+    </form>
+</section>

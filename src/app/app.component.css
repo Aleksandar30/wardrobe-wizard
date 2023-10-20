@@ -1,0 +1,27 @@
+
+mat-sidenav-container, mat-sidenav-content, mat-sidenav {
+    height: 100%;
+  
+}
+
+mat-sidenav {
+    width: 240px;
+}
+mat-icon:hover {
+    cursor: pointer;
+    
+}
+mat-icon {
+    vertical-align: top;
+    margin-right: 10;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+    
+}
+
+a :hover {
+    cursor: pointer;
+}

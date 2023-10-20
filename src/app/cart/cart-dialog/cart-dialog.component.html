@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>Confirm Add to Cart</h2>
+<div mat-dialog-content>
+    <p>Set item amount: {{ data.item.name }}</p>
+    <mat-form-field>
+        <input matInput type="number" placeholder="Amount" [(ngModel)]="amount" required>
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancel</button>
+    <button mat-button [mat-dialog-close]="{amount: amount}" cdkFocusInitial>Add to Cart</button>
+</div>
