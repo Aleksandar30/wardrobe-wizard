@@ -21,6 +21,7 @@ import { CartDialogComponent } from './cart/cart-dialog/cart-dialog.component';
 import { CompletedOrdersComponent } from './cart/completed-orders/completed-orders.component';
 import { ConfirmDialogComponent } from './auth/profile/confirm-dialog/confirm-dialog.component';
 import { ReviewsComponent } from './shop/reviews/reviews.component';
+import { OrderService } from './cart/order.service';
 
 
 @NgModule({
@@ -49,7 +50,7 @@ import { ReviewsComponent } from './shop/reviews/reviews.component';
     FormsModule,
     FlexLayoutModule,
   ],
-  providers: [ShopService, UserService, CartService],
+  providers: [ShopService, UserService, CartService, OrderService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

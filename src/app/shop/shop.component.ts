@@ -19,15 +19,7 @@ import { ReviewsComponent } from './reviews/reviews.component';
 })
 export class ShopComponent implements OnInit {
 
-
-
-
-
-
   shopItemsSource = new MatTableDataSource<ShopItem>();
-
-
-
   showFilters = false;
 
   displayedColumns = ['name', 'type', 'gender', 'size', 'manufacturer', 'productionDate', 'price', 'rating', 'shoppingCart'];
@@ -45,11 +37,6 @@ export class ShopComponent implements OnInit {
 
   openUserReviewsDialog(item: ShopItem) {
     var userLoggedIn = this.userService.checkIfUserLoggedIn();
-
-    // if (!userLoggedIn) {
-    //   alert("You need to be logged in to add items to your cart");
-    //   return;
-    // }
     const dialogRef = this.dialog.open(ReviewsComponent, {
       data: { item: item }
     });
@@ -94,12 +81,25 @@ export class ShopComponent implements OnInit {
       alert("You need to be logged in to add items to your cart");
       return;
     }
+    var isEditing = false;
+
+    if (this.cartItems.has(item)) {
+      isEditing = true;
+    }
+
+
+
+
     const dialogRef = this.dialog.open(CartDialogComponent, {
-      data: { item: item }
+      data: { item: item, isEditing: isEditing }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        if (result.amount === 0) {
+          this.removeFromCart(item);
+          return;
+        }
         this.addToCart(item, result.amount);
       }
     });

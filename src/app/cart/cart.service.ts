@@ -5,6 +5,7 @@ import { OrderStatus } from '../enums';
 import { Order } from './order.model';
 import { UserService } from '../auth/users.service';
 import { ShopService } from '../shop/shop.service';
+import { OrderService } from './order.service';
 
 
 
@@ -12,6 +13,7 @@ import { ShopService } from '../shop/shop.service';
     providedIn: 'root'
 })
 export class CartService {
+
 
 
     private cartItems = new Map<ShopItem, number>();
@@ -22,22 +24,11 @@ export class CartService {
 
     private cartItemsPrice = 0;
 
-    constructor(private userService: UserService, private shopService: ShopService) { }
+    constructor(private userService: UserService, private orderService: OrderService) { }
 
     getOrders() {
-        this.orders = this.userService.currentUser?.purchases || [];
         this.ordersSubject.next(this.orders);
         return this.ordersSubject.asObservable();
-    }
-
-
-    changeOrderStatus(order: Order, status: OrderStatus) {
-        const index = this.orders.indexOf(order);
-        if (index > -1) {
-            this.orders[index].status = status;
-            this.ordersSubject.next(this.orders);
-        }
-
     }
 
     addToCart(item: ShopItem, amount: number = 1) {
@@ -65,17 +56,21 @@ export class CartService {
         }
     }
 
-    removeOrder(order: Order) {
-        const index = this.orders.indexOf(order);
-        if (index > -1) {
-            this.orders.splice(index, 1);
-            this.ordersSubject.next(this.orders);
-        }
+    editCartItem(item: ShopItem, newAmount: number) {
+        if (this.cartItems.has(item)) {
+            const oldAmount = this.cartItems.get(item);
+            if (typeof oldAmount !== 'undefined') {
+                this.cartItemsPrice -= item.price * oldAmount;
+            }
 
+            this.cartItems.set(item, newAmount);
+            this.cartItemsPrice += item.price * newAmount;
+            this.cartItemsSubject.next(this.cartItems);
+        }
     }
 
+
     checkout() {
-        console.log('called checkout');
         var newOrders: Order[] = [];
         for (const item of this.cartItems.keys()) {
             newOrders.push({
@@ -86,11 +81,8 @@ export class CartService {
                 status: OrderStatus.InProgress,
                 amount: this.cartItems.get(item) || 0
             });
-            this.orders.push(...newOrders);
-
-            console.log(this.orders);
-            this.userService.currentUser?.purchases?.push(this.orders[this.orders.length - 1]);
         }
+        this.orderService.addOrders(newOrders);
 
 
         this.cartItems.clear();

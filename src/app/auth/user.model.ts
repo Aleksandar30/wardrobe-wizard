@@ -8,7 +8,6 @@ export interface User {
     email: string;
     password: string;
     favoriteClothingType?: ClothingType;
-    purchases?: Array<Order>;
     address?: string;
 }
 

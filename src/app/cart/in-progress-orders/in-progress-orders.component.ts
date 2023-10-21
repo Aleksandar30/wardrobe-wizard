@@ -3,6 +3,7 @@ import { CartService } from '../cart.service';
 import { OrderStatus } from 'src/app/enums';
 import { Order } from '../order.model';
 import { UserService } from 'src/app/auth/users.service';
+import { OrderService } from '../order.service';
 
 @Component({
   selector: 'app-in-progress-orders',
@@ -16,28 +17,24 @@ export class InProgressOrdersComponent implements OnInit {
   displayedColumns: string[] = ['name', 'amount', 'price', 'status'];
 
 
-  constructor(private cartService: CartService, private userService: UserService) { }
+  constructor(private cartService: CartService, private userService: UserService, private orderService: OrderService) { }
 
   ngOnInit() {
-    this.cartService.getOrders().subscribe((orders: Order[]) => {
-      console.log(orders);
-      this.orders = orders;
-      for (let order of this.orders) {
-        if (order.status === OrderStatus.Delivered || order.status === OrderStatus.Canceled || order.userId !== this.userService.currentUser!.id) {
-          this.orders = this.orders.filter((o: Order) => o.id !== order.id);
-        }
+    this.orderService.getOrders().subscribe((orders: Order[]) => {
+      const currentUser = this.userService.currentUser;
+      if (currentUser) {
+        this.orders = orders.filter((o: Order) => o.userId === currentUser.id && o.status === OrderStatus.InProgress);
+
       }
-      console.log(orders);
     });
   }
 
   updateOrderStatus(order: Order) {
     order.status = this.mapStatusToEnum(order.status);
-    this.cartService.changeOrderStatus(order, order.status);
+    this.orderService.changeOrderStatus(order, order.status);
 
-    if (order.status === OrderStatus.Delivered || order.status === OrderStatus.Canceled) {
-      this.orders = this.orders.filter((o: Order) => o.id !== order.id);
-    }
+    console.log(order.status);
+
   }
 
   private mapStatusToEnum(status: string): OrderStatus {
@@ -56,9 +53,6 @@ export class InProgressOrdersComponent implements OnInit {
 
 
 
-  removeFromCart(order: Order) {
-    this.cartService.removeOrder(order);
-    this.orders = this.orders.filter((o: Order) => o.id !== order.id);
-  }
+
 
 }

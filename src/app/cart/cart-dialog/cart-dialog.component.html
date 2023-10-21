@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>Confirm Add to Cart</h2>
+<h2 mat-dialog-title>{{ isEditing ? "Edit dialog" : "Add dialog" }}</h2>
 <div mat-dialog-content>
     <p>Set item amount: {{ data.item.name }}</p>
     <mat-form-field>
@@ -7,5 +7,7 @@
 </div>
 <div mat-dialog-actions>
     <button mat-button (click)="onNoClick()">Cancel</button>
-    <button mat-button [mat-dialog-close]="{amount: amount}" cdkFocusInitial>Add to Cart</button>
+    <button mat-button [mat-dialog-close]="{amount: amount}" cdkFocusInitial>{{ isEditing ? "Edit item amount" : "Add to
+        cart"
+        }}</button>
 </div>

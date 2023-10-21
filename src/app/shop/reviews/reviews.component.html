@@ -18,15 +18,16 @@
         <mat-header-row *matHeaderRowDef="['review', 'score']"></mat-header-row>
         <mat-row *matRowDef="let review; columns: ['review', 'score']"></mat-row>
     </table>
-    <form *ngIf="userService.currentUser" fxLayout="column" fxLayoutGap="2vh" #editForm="ngForm"
-        (ngSubmit)="addReview(editForm)">
+    <h2 fxLayoutAlign="center center" *ngIf="!userService.currentUser">Login to post review</h2>
+    <form *ngIf="userService.currentUser && isBuyer" fxLayoutAlign="center center" fxLayout="column" fxLayoutGap="2vh"
+        #editForm="ngForm" (ngSubmit)="addReview(editForm)">
         <!-- Email -->
         <mat-card>
             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1vw">
 
                 <mat-form-field>
                     <input matInput type="text" placeholder="Text" ngModel name="text" required #textInput="ngModel">
-                    <mat-hint align="end">Name</mat-hint>
+                    <mat-hint align="end">Review</mat-hint>
                 </mat-form-field>
             </div>
             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1vw">

@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import { Review, ShopItem } from '../shop-item.model';
 import { UserService } from 'src/app/auth/users.service';
 import { ShopService } from '../shop.service';
+import { OrderService } from 'src/app/cart/order.service';
 
 @Component({
   selector: 'app-reviews',
@@ -11,13 +12,9 @@ import { ShopService } from '../shop.service';
   styleUrls: ['./reviews.component.css']
 })
 export class ReviewsComponent {
-  onSubmit() {
-    throw new Error('Method not implemented.');
-  }
-
-
 
   averageScore: number = 0;
+  isBuyer: boolean = false;
 
   get formattedAverageScore(): string {
     return this.averageScore.toFixed(2);
@@ -28,15 +25,22 @@ export class ReviewsComponent {
     @Inject(MAT_DIALOG_DATA)
     public data: { item: ShopItem },
     public userService: UserService,
-    private shopService: ShopService
+    private shopService: ShopService,
+    private orderService: OrderService
 
   ) {
-
     this.averageScore = shopService.calculateAverageScore(data.item);
+    if (userService.currentUser) {
+      this.isBuyer = orderService.isBuyer(userService.currentUser.id, data.item.id);
+    }
   }
 
   closeDialog(): void {
     this.dialogRef.close();
+  }
+
+  checkIfBuyer(): boolean {
+    return false;
   }
 
 

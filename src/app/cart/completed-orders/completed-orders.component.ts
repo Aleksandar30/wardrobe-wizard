@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { CartService } from '../cart.service';
 import { OrderStatus } from 'src/app/enums';
 import { Order } from '../order.model';
+import { OrderService } from '../order.service';
+import { UserService } from 'src/app/auth/users.service';
 
 @Component({
   selector: 'app-completed-orders',
@@ -14,11 +16,15 @@ export class CompletedOrdersComponent {
   displayedColumns: string[] = ['name', 'amount', 'status', 'remove'];
 
 
-  constructor(private cartService: CartService) { }
+  constructor(private orderService: OrderService, private userService: UserService) { }
 
   ngOnInit() {
-    this.cartService.getOrders().subscribe((orders: Order[]) => {
-      this.orders = orders.filter(order => order.status === OrderStatus.Delivered || order.status === OrderStatus.Canceled);
+    this.orderService.getOrders().subscribe((orders: Order[]) => {
+      const currentUser = this.userService.currentUser;
+      if (currentUser) {
+        this.orders = orders.filter((o: Order) => o.userId === currentUser.id && o.status !== OrderStatus.InProgress);
+
+      }
     });
   }
 
@@ -26,8 +32,7 @@ export class CompletedOrdersComponent {
 
 
   removeFromCart(order: Order) {
-    this.cartService.removeOrder(order);
-    this.orders = this.orders.filter((o: Order) => o.id !== order.id);
+    this.orderService.removeOrder(order);
   }
 
 }

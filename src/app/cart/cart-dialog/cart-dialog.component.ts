@@ -9,11 +9,14 @@ import { ShopItem } from 'src/app/shop/shop-item.model';
 })
 export class CartDialogComponent {
   amount: number = 1;
+  isEditing: boolean;
 
   constructor(
     public dialogRef: MatDialogRef<CartDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { item: ShopItem }
-  ) { }
+    @Inject(MAT_DIALOG_DATA) public data: { item: ShopItem, isEditing: boolean }
+  ) {
+    this.isEditing = data.isEditing;
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
