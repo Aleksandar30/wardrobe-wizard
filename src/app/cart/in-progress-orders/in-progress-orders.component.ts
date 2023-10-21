@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { CartService, Order } from '../cart.service';
+import { CartService } from '../cart.service';
 import { OrderStatus } from 'src/app/enums';
+import { Order } from '../order.model';
+import { UserService } from 'src/app/auth/users.service';
 
 @Component({
   selector: 'app-in-progress-orders',
@@ -14,11 +16,18 @@ export class InProgressOrdersComponent implements OnInit {
   displayedColumns: string[] = ['name', 'amount', 'price', 'status'];
 
 
-  constructor(private cartService: CartService) { }
+  constructor(private cartService: CartService, private userService: UserService) { }
 
   ngOnInit() {
     this.cartService.getOrders().subscribe((orders: Order[]) => {
+      console.log(orders);
       this.orders = orders;
+      for (let order of this.orders) {
+        if (order.status === OrderStatus.Delivered || order.status === OrderStatus.Canceled || order.userId !== this.userService.currentUser!.id) {
+          this.orders = this.orders.filter((o: Order) => o.id !== order.id);
+        }
+      }
+      console.log(orders);
     });
   }
 

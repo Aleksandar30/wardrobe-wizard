@@ -17,6 +17,8 @@ export class CheckoutComponent {
   constructor(private cartService: CartService, private userService: UserService) { }
 
   ngOnInit() {
+    console.log(this.userService.currentUser?.purchases);
+
     this.cartService.getCartItems().subscribe(items => {
       this.cartItems = items;
       this.itemsPrice = this.cartService.getCartItemsPrice();

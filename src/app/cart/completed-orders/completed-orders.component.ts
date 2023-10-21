@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { CartService, Order } from '../cart.service';
+import { CartService } from '../cart.service';
 import { OrderStatus } from 'src/app/enums';
+import { Order } from '../order.model';
 
 @Component({
   selector: 'app-completed-orders',

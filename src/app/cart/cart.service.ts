@@ -3,7 +3,8 @@ import { BehaviorSubject, map } from 'rxjs';
 import { ShopItem } from '../shop/shop-item.model';
 import { OrderStatus } from '../enums';
 import { Order } from './order.model';
-
+import { UserService } from '../auth/users.service';
+import { ShopService } from '../shop/shop.service';
 
 
 
@@ -21,9 +22,11 @@ export class CartService {
 
     private cartItemsPrice = 0;
 
-    constructor() { }
+    constructor(private userService: UserService, private shopService: ShopService) { }
 
     getOrders() {
+        this.orders = this.userService.currentUser?.purchases || [];
+        this.ordersSubject.next(this.orders);
         return this.ordersSubject.asObservable();
     }
 
@@ -38,13 +41,6 @@ export class CartService {
     }
 
     addToCart(item: ShopItem, amount: number = 1) {
-
-        // this.orders.push({
-        //     id: this.orders.length + 1,
-        //     shopItem: item,
-        //     status: OrderStatus.InProgress,
-        //     amount: amount
-        // });
         if (this.cartItems.has(item)) {
             const currentAmount = this.cartItems.get(item);
             if (typeof currentAmount !== 'undefined') {
@@ -79,15 +75,21 @@ export class CartService {
     }
 
     checkout() {
-        this.orders = [];
+        console.log('called checkout');
+        var newOrders: Order[] = [];
         for (const item of this.cartItems.keys()) {
-            this.orders.push({
+            newOrders.push({
                 id: this.orders.length + 1,
+                userId: this.userService.currentUser?.id,
                 shopItem: item,
                 price: item.price * (this.cartItems.get(item) || 0),
                 status: OrderStatus.InProgress,
                 amount: this.cartItems.get(item) || 0
             });
+            this.orders.push(...newOrders);
+
+            console.log(this.orders);
+            this.userService.currentUser?.purchases?.push(this.orders[this.orders.length - 1]);
         }
 
 

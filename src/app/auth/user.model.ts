@@ -13,11 +13,3 @@ export interface User {
 }
 
 
-// export interface Purchases {
-//     id: number;
-//     shopItemId: number;
-//     date: Date;
-//     status: OrderStatus;
-//     quantity: number;
-//     usersRating: number;
-// } 
