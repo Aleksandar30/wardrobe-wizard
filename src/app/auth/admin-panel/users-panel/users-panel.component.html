@@ -1,0 +1,55 @@
+<section [style.margin-left]="'8px'" fxLayout="row" fxLayoutAlign="start">
+    <h2 fxLayoutGap>Click user to edit details</h2>
+</section>
+<mat-table [dataSource]="users" matSort class="mat-elevation-z8">
+    <ng-container matColumnDef="id">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let user">{{ user.id }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="role">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>Role</mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let user">{{ user.role ? user.role : 'user' }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let user">{{ user.name }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="lastname">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>Last Name</mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let user">{{ user.lastname }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let user">{{ user.email }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="password">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>Password</mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let user">{{ user.password }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="favoriteClothingType">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>favoriteClothingType</mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let user">{{ user.favoriteClothingType }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="address">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>Address</mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let user">{{ user.address }}</mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns" (click)="onRowClick(row)"></mat-row>
+</mat-table>
+
+<mat-paginator [pageSize]="5" [pageSizeOptions]="[1,2, 4, 10, 20, 50, 100]" aria-label="Select page">
+</mat-paginator>
+
+<section fxLayoutAlign="space-between" [style.margin]="'8px'">
+    <button fxLayoutGap="15" mat-raised-button color="accent" (click)="addUser()">
+        ADD
+    </button>
+
+    <mat-form-field fxFlex="60%">
+        <input placeholder="Search" matInput type="text" (keyup)="doFilter($any($event.target).value)">
+    </mat-form-field>
+</section>

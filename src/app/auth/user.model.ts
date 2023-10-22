@@ -3,6 +3,7 @@ import { ClothingType, OrderStatus } from "../enums";
 
 export interface User {
     id: number;
+    role?: string;
     name: string;
     lastname: string;
     email: string;

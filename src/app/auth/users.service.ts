@@ -1,3 +1,4 @@
+import { BehaviorSubject } from "rxjs";
 import { Order } from "../cart/order.model";
 import { ClothingSize, ClothingType, Gender, OrderStatus } from "../enums";
 import { ShopItem } from "../shop/shop-item.model";
@@ -5,9 +6,17 @@ import { User } from "./user.model";
 
 export class UserService {
 
+
+    getUsers() {
+        return this.usersSubjects.asObservable();
+    }
+
     deleteUser(id: number) {
-        UserService.dummyUserList = UserService.dummyUserList.filter(user => user.id != id);
-        this.currentUser = undefined;
+        this.dummyUserList = this.dummyUserList.filter(user => user.id != id);
+        if (this.currentUser?.id == id) {
+            this.currentUser = undefined;
+        }
+        this.usersSubjects.next(this.dummyUserList);
     }
     currentUser: User | undefined;
 
@@ -19,13 +28,11 @@ export class UserService {
     getUserById(id: number): User {
 
         var foundUser!: User;
-        UserService.dummyUserList.forEach(user => {
+        this.dummyUserList.forEach(user => {
             if (user.id == id) {
                 foundUser = user;
             }
         });
-
-        this.currentUser = foundUser;
         return foundUser;
     }
 
@@ -37,7 +44,7 @@ export class UserService {
         password: string,
         type: ClothingType): User {
         var maxId: number = 0;
-        UserService.dummyUserList.forEach(user => {
+        this.dummyUserList.forEach(user => {
             if (maxId < user.id) {
                 maxId = user.id;
             }
@@ -58,30 +65,34 @@ export class UserService {
 
         }
 
-        UserService.dummyUserList.push(user);
+        this.dummyUserList.push(user);
 
-        this.currentUser = user;
+        if (this.currentUser == undefined) {
+            this.currentUser = user;
+        }
+
+        this.usersSubjects.next(this.dummyUserList);
 
 
         return user;
     }
 
     getUser(userEmail: string): User {
-        var user = UserService.dummyUserList.find(userToFind => userToFind.email == userEmail)!;
+        var user = this.dummyUserList.find(userToFind => userToFind.email == userEmail)!;
         return user;
 
     }
 
     isPasswordCorrect(userEmail: string, password: string): boolean {
-        var hasCorrectCredentials: boolean = UserService.dummyUserList.find(userToFind =>
+        var hasCorrectCredentials: boolean = this.dummyUserList.find(userToFind =>
             (userToFind.email == userEmail && userToFind.password == password)) != undefined;
         if (hasCorrectCredentials) {
-            this.currentUser = UserService.dummyUserList.find(userToFind => userToFind.email == userEmail)!;
+            this.currentUser = this.dummyUserList.find(userToFind => userToFind.email == userEmail)!;
         }
         return hasCorrectCredentials;
     }
 
-    static dummyUserList: User[] = [
+    private dummyUserList: User[] = [
         {
             id: 1,
             name: 'John',
@@ -110,5 +121,17 @@ export class UserService {
             favoriteClothingType: ClothingType.SportsWear,
             address: '789 Elm St, Anytown USA',
         },
+        {
+            id: 4,
+            name: 'Admin',
+            role: 'admin',
+            lastname: 'Admin',
+            email: 'admin@mail.com',
+            password: 'password789',
+            favoriteClothingType: ClothingType.SportsWear,
+            address: '789 Elm St, Anytown USA',
+        },
     ];
+
+    private usersSubjects = new BehaviorSubject<User[]>(this.dummyUserList);
 }

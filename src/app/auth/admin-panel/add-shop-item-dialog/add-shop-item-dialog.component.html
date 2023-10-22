@@ -1,0 +1,195 @@
+<div fxLayoutAlign="space-between">
+    <button mat-button [mat-dialog-close]="true">
+        <mat-icon matListIcon>close</mat-icon>
+    </button>
+</div>
+
+<mat-vertical-stepper #stepper linear="true">
+    <mat-step>
+        <ng-template matStepLabel>Item Details</ng-template>
+
+        <form fxLayout="column" fxLayoutGap="2vh" #addItemForm="ngForm" (ngSubmit)="stepper.next()">
+            <!-- NAME -->
+            <mat-card>
+                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1vw">
+                    <mat-form-field fxFlex="100%">
+                        <input matInput type="text" placeholder="Item name" ngModel name="name" required
+                            #nameInput="ngModel">
+                        <mat-hint align="end">Name</mat-hint>
+                        <mat-error *ngIf="nameInput.hasError('required')">Name is required</mat-error>
+                    </mat-form-field>
+                </div>
+            </mat-card>
+            <button [disabled]="addItemForm.invalid" mat-raised-button type="button" color="primary"
+                (click)="stepper.next() ; addNewField(addItemForm)">Next</button>
+        </form>
+    </mat-step>
+
+    <mat-step>
+        <ng-template matStepLabel>Item Type</ng-template>
+        <form fxLayout="column" fxLayoutGap="2vh" #addTypeForm="ngForm" (ngSubmit)="addNewField(addTypeForm)">
+            <!-- Type -->
+            <mat-card>
+                <mat-form-field fxFlex="100%">
+                    <mat-label>Type</mat-label>
+                    <mat-select name="type" ngModel required #categoryInput="ngModel">
+                        <mat-option value="sports wear">SportsWear</mat-option>
+                        <mat-option value="casual">Casual</mat-option>
+                        <mat-option value="official">Official</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="categoryInput.hasError('required')">Type is required</mat-error>
+                </mat-form-field>
+            </mat-card>
+            <button mat-raised-button type="button" color="warn" (click)="stepper.previous()">Back</button>
+            <button [disabled]="addTypeForm.invalid" mat-raised-button type="button" color="primary"
+                (click)="stepper.next() ; addNewField(addTypeForm)">Next</button>
+
+        </form>
+    </mat-step>
+    <!-- PRICE -->
+    <mat-step>
+        <ng-template matStepLabel>Item Price</ng-template>
+        <form fxLayout="column" fxLayoutGap="2vh" #addPriceForm="ngForm" (ngSubmit)="addNewField(addPriceForm)">
+            <!-- PRICE -->
+            <mat-card>
+                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1vw">
+                    <mat-icon>attach_money</mat-icon>
+
+                    <mat-form-field fxFlex="100%">
+                        <input matInput type="number" placeholder="Item price" ngModel name="price" required
+                            #priceInput="ngModel">
+                        <mat-hint align="end">Price</mat-hint>
+                        <mat-error *ngIf="priceInput.hasError('required')">Price is required</mat-error>
+                    </mat-form-field>
+                </div>
+            </mat-card>
+            <button mat-raised-button type="button" color="warn" (click)="stepper.previous()">Back</button>
+            <button [disabled]="addPriceForm.invalid" mat-raised-button type="button" color="primary"
+                (click)="stepper.next() ; addNewField(addPriceForm)">Next</button>
+
+        </form>
+    </mat-step>
+    <!-- GENDER -->
+    <mat-step>
+        <ng-template matStepLabel>Item Gender</ng-template>
+
+        <form fxLayout="column" fxLayoutGap="2vh" #addGenderForm="ngForm" (ngSubmit)="addNewField(addGenderForm)">
+            <!-- GENDER -->
+            <mat-card>
+                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1vw">
+                    <mat-icon>gender</mat-icon>
+
+                    <mat-form-field fxFlex="100%">
+                        <mat-label>Gender</mat-label>
+                        <mat-select name="gender" ngModel required #genderInput="ngModel">
+                            <mat-option value="male">Male</mat-option>
+                            <mat-option value="female">Female</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="genderInput.hasError('required')">Gender is required</mat-error>
+                    </mat-form-field>
+                </div>
+            </mat-card>
+
+            <button mat-raised-button type="button" color="warn" (click)="stepper.previous()">Back</button>
+            <button [disabled]="addGenderForm.invalid" mat-raised-button type="button" color="primary"
+                (click)="stepper.next() ; addNewField(addGenderForm)">Next</button>
+        </form>
+    </mat-step>
+    <!-- SIZE -->
+    <mat-step>
+        <ng-template matStepLabel>Item size</ng-template>
+        <form fxLayout="column" fxLayoutGap="2vh" #addSizeForm="ngForm" (ngSubmit)="addNewField(addSizeForm)">
+            <!-- SIZE -->
+            <mat-card>
+                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1vw">
+
+                    <mat-form-field fxFlex="100%">
+                        <mat-label>Size</mat-label>
+                        <mat-select name="size" ngModel required #sizeInput="ngModel">
+                            <mat-option value="XS">XS</mat-option>
+                            <mat-option value="S">S</mat-option>
+                            <mat-option value="L">L</mat-option>
+                            <mat-option value="XL">XL</mat-option>
+                            <mat-option value="XXL">XXL</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="sizeInput.hasError('required')">Size is required</mat-error>
+                    </mat-form-field>
+                </div>
+            </mat-card>
+            <button mat-raised-button type="button" color="warn" (click)="stepper.previous()">Back</button>
+            <button [disabled]="addSizeForm.invalid" mat-raised-button type="button" color="primary"
+                (click)="stepper.next() ; addNewField(addSizeForm)">Next</button>
+
+        </form>
+    </mat-step>
+
+    <!-- Manufacturer -->
+    <mat-step>
+        <ng-template matStepLabel>Item Manufacturer</ng-template>
+
+        <form fxLayout="column" fxLayoutGap="2vh" #addManufacturerForm="ngForm"
+            (ngSubmit)="addNewField(addManufacturerForm)">
+            <!-- Manufacturer -->
+            <mat-card>
+                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1vw">
+
+                    <mat-form-field fxFlex="100%">
+                        <input matInput type="text" placeholder="Item manufacturer" ngModel name="manufacturer" required
+                            #manufacturerInput="ngModel">
+                        <mat-hint align="end">Manufacturer</mat-hint>
+                        <mat-error *ngIf="manufacturerInput.hasError('required')">Price is required</mat-error>
+                    </mat-form-field>
+                </div>
+            </mat-card>
+            <button mat-raised-button type="button" color="warn" (click)="stepper.previous()">Back</button>
+            <button [disabled]="addManufacturerForm.invalid" mat-raised-button type="button" color="primary"
+                (click)="stepper.next() ; addNewField(addManufacturerForm)">Next</button>
+        </form>
+    </mat-step>
+
+    <mat-step>
+        <ng-template matStepLabel>Item Date</ng-template>
+
+        <form fxLayout="column" fxLayoutGap="2vh" #addDateForm="ngForm" (ngSubmit)="addNewField(addDateForm)">
+            <mat-card>
+                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1vw">
+                    <mat-form-field fxFlex="100%">
+                        <input matInput [matDatepicker]="picker" placeholder="Item date" ngModel name="date" required
+                            #dateInput="ngModel">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-hint align="end">Date</mat-hint>
+                        <mat-error *ngIf="dateInput.hasError('required')">Date is required</mat-error>
+                    </mat-form-field>
+                </div>
+            </mat-card>
+            <button mat-raised-button type="button" color="warn" (click)="stepper.previous()">Back</button>
+            <button [disabled]="addDateForm.invalid" mat-raised-button type="button" color="primary"
+                (click)="stepper.next(); addNewField(addDateForm)">Next</button>
+        </form>
+    </mat-step>
+
+
+    <!-- RATING -->
+    <mat-step>
+        <ng-template matStepLabel>Item Rating</ng-template>
+
+        <form fxLayout="column" fxLayoutGap="2vh" #addRatingForm="ngForm" (ngSubmit)="addNewField(addRatingForm)">
+            <!-- RATING -->
+            <mat-card>
+                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1vw">
+
+                    <mat-form-field fxFlex="100%">
+                        <input matInput type="number" placeholder="Item rating" ngModel name="rating" required
+                            #ratingInput="ngModel">
+                        <mat-hint align="end">Rating</mat-hint>
+                        <mat-error *ngIf="ratingInput.hasError('required')">Price is required</mat-error>
+                    </mat-form-field>
+                </div>
+            </mat-card>
+            <button mat-raised-button type="button" color="warn" (click)="stepper.previous()">Back</button>
+            <button [disabled]="addRatingForm.invalid" mat-raised-button type="button" color="primary"
+                (click)="stepper.next() ; addNewField(addRatingForm) ; addShopItem()">ADD ITEM</button>
+        </form>
+    </mat-step>
+</mat-vertical-stepper>

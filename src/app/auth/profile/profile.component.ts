@@ -16,9 +16,6 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
 })
 export class ProfileComponent implements OnInit {
 
-
-
-
   isEditing: boolean = false;
   profileForInput!: User;
 
@@ -33,7 +30,7 @@ export class ProfileComponent implements OnInit {
   deleteUser() {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: {
-        message: 'Are you sure you want to delete your profile?',
+        message: 'Are you sure you want to delete profile?',
         buttonText: {
           ok: 'Delete',
           cancel: 'Cancel'
@@ -44,7 +41,9 @@ export class ProfileComponent implements OnInit {
     dialogRef.afterClosed().subscribe((confirmed: boolean) => {
       if (confirmed) {
         this.userService.deleteUser(this.data.user.id);
-        this.router.navigate(['/']);
+        if (!this.userService.currentUser) {
+          this.router.navigate(["/"]);
+        }
       }
     });
   }
@@ -59,6 +58,7 @@ export class ProfileComponent implements OnInit {
       password: this.data.user.password,
       address: this.data.user.address,
       favoriteClothingType: this.data.user.favoriteClothingType,
+      role: this.data.user.role
 
 
     };
@@ -71,6 +71,7 @@ export class ProfileComponent implements OnInit {
     this.data.user.password = this.profileForInput.password;
     this.data.user.address = this.profileForInput.address;
     this.data.user.favoriteClothingType = this.profileForInput.favoriteClothingType;
+    this.data.user.role = this.profileForInput.role;
 
     this.snackBar.open('User saved', 'Dismiss', {
       duration: 3000,

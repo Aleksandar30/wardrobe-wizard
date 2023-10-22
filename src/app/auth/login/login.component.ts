@@ -30,7 +30,7 @@ export class LoginComponent {
 
     if (!user) {
       this.errorExists = true;
-      this.errorText = "There is no registered user" + email;
+      this.errorText = "There is no registered user: " + email;
       return;
     }
 

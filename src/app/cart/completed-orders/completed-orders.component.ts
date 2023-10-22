@@ -4,6 +4,7 @@ import { OrderStatus } from 'src/app/enums';
 import { Order } from '../order.model';
 import { OrderService } from '../order.service';
 import { UserService } from 'src/app/auth/users.service';
+import { User } from 'src/app/auth/user.model';
 
 @Component({
   selector: 'app-completed-orders',
@@ -11,6 +12,7 @@ import { UserService } from 'src/app/auth/users.service';
   styleUrls: ['./completed-orders.component.css']
 })
 export class CompletedOrdersComponent {
+
   orders: Order[] = [];
 
   displayedColumns: string[] = ['name', 'amount', 'status', 'remove'];
@@ -34,5 +36,6 @@ export class CompletedOrdersComponent {
   removeFromCart(order: Order) {
     this.orderService.removeOrder(order);
   }
+
 
 }

@@ -6,7 +6,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { ShopComponent } from './shop/shop.component';
-import { WellcomeComponent } from './wellcome/wellcome.component';
 import { CartComponent } from './cart/cart.component';
 import { RoutingModule } from './app-routing.module';
 import { FlexLayoutModule } from '@ngbracket/ngx-layout';
@@ -22,6 +21,13 @@ import { CompletedOrdersComponent } from './cart/completed-orders/completed-orde
 import { ConfirmDialogComponent } from './auth/profile/confirm-dialog/confirm-dialog.component';
 import { ReviewsComponent } from './shop/reviews/reviews.component';
 import { OrderService } from './cart/order.service';
+import { AdminPanelComponent } from './auth/admin-panel/admin-panel.component';
+import { UsersPanelComponent } from './auth/admin-panel/users-panel/users-panel.component';
+import { ShopItemsPanelComponent } from './auth/admin-panel/shop-items-panel/shop-items-panel.component';
+import { OrdersPanelComponent } from './auth/admin-panel/orders-panel/orders-panel.component';
+import { AddUserDialogComponent } from './auth/admin-panel/add-user-dialog/add-user-dialog.component';
+import { AddShopItemDialogComponent } from './auth/admin-panel/add-shop-item-dialog/add-shop-item-dialog.component';
+import { EditShopItemDialogComponent } from './auth/admin-panel/edit-shop-item-dialog/edit-shop-item-dialog.component';
 
 
 @NgModule({
@@ -30,7 +36,6 @@ import { OrderService } from './cart/order.service';
     LoginComponent,
     RegisterComponent,
     ShopComponent,
-    WellcomeComponent,
     CartComponent,
     ProfileComponent,
     CheckoutComponent,
@@ -39,7 +44,14 @@ import { OrderService } from './cart/order.service';
     CartDialogComponent,
     CompletedOrdersComponent,
     ConfirmDialogComponent,
-    ReviewsComponent
+    ReviewsComponent,
+    AdminPanelComponent,
+    UsersPanelComponent,
+    ShopItemsPanelComponent,
+    OrdersPanelComponent,
+    AddUserDialogComponent,
+    AddShopItemDialogComponent,
+    EditShopItemDialogComponent
 
   ],
   imports: [

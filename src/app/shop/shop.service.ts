@@ -1,8 +1,68 @@
 import { Review, ShopItem } from "./shop-item.model";
 import { ClothingSize, Gender, ClothingType } from '../enums';
+import { BehaviorSubject } from "rxjs";
 
 
 export class ShopService {
+    deleteShopItem(id: number) {
+        this.shopItems = this.shopItems.filter(item => item.id != id);
+        this.itemsSubject.next(this.shopItems);
+    }
+
+
+
+    editShopItem(itemForEdit: ShopItem) {
+        this.shopItems.forEach(item => {
+            if (item.id == itemForEdit.id) {
+                item = itemForEdit;
+            }
+        });
+
+        this.itemsSubject.next(this.shopItems);
+    }
+
+
+    getItemByID(id: number): any {
+        var foundItem!: ShopItem;
+        this.shopItems.forEach(item => {
+            if (item.id == id) {
+                foundItem = item;
+            }
+        });
+        return foundItem;
+    }
+
+
+    addShopItem(values: { [key: string]: any; }) {
+        const newItem: ShopItem = {
+            id: this.findNextId(),
+            name: values['name'],
+            type: values['type'],
+            gender: values['gender'],
+            size: values['size'],
+            manufacturer: values['manufacturer'],
+            productionDate: values['date'],
+            price: values['price'],
+            rating: values['rating'],
+            userReviews: []
+        };
+
+
+
+        this.shopItems.push(newItem);
+        this.itemsSubject.next(this.shopItems);
+        // Add the new item to your data store or make an API call to add it to a database
+    }
+
+    findNextId(): number {
+        let maxId = 0;
+        for (const item of this.shopItems) {
+            if (item.id > maxId) {
+                maxId = item.id;
+            }
+        }
+        return maxId + 1;
+    }
 
     addReview(item: ShopItem, review: Review) {
         item.userReviews.push(review);
@@ -33,7 +93,7 @@ export class ShopService {
             manufacturer: 'Nike',
             productionDate: new Date(2021, 5, 1),
             price: 129.99,
-            rating: 4.5,
+            rating: 2.5,
             userReviews: [
                 {
                     text: 'Great shoes!',
@@ -75,7 +135,7 @@ export class ShopService {
             manufacturer: 'Under Armour',
             productionDate: new Date(2021, 6, 1),
             price: 149.99,
-            rating: 4.2,
+            rating: 1.2,
             userReviews: [
                 {
                     text: 'Good shoes, but not great',
@@ -96,7 +156,7 @@ export class ShopService {
             manufacturer: 'New Balance',
             productionDate: new Date(2021, 3, 1),
             price: 149.99,
-            rating: 4.6,
+            rating: 3.6,
             userReviews: [
                 {
                     text: 'Great shoes for running!',
@@ -117,7 +177,7 @@ export class ShopService {
             manufacturer: 'Brooks',
             productionDate: new Date(2021, 2, 1),
             price: 129.99,
-            rating: 4.4,
+            rating: 2.4,
             userReviews: [
                 {
                     text: 'Good shoes, but not great',
@@ -448,7 +508,12 @@ export class ShopService {
 
     constructor() { }
 
-    getShopItems(): ShopItem[] {
+    private itemsSubject = new BehaviorSubject<ShopItem[]>(this.shopItems);
+
+    getShopItems() {
+        return this.itemsSubject.asObservable();
+    }
+    getShopItemsC() {
         return this.shopItems;
     }
 }

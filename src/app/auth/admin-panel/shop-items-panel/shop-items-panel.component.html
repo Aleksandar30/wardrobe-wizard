@@ -1,0 +1,73 @@
+<section [style.margin-left]="'8px'" fxLayout="row" fxLayoutAlign="start">
+    <h2 fxLayoutGap>Click item to edit details</h2>
+</section>
+
+<mat-table [dataSource]="items" matSort class="mat-elevation-z8">
+    <ng-container matColumnDef="id">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let item">{{ item.id }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let item">{{ item.name }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="type">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>Type</mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let item">{{ item.type }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="gender">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>Gender</mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let item">{{ item.gender }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="size">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>Size</mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let item">{{ item.size }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="manufacturer">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>Manufacturer</mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let item">{{ item.manufacturer }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="productionDate">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>Production Date</mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let item">{{ item.productionDate | date}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>Price</mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let item">{{ item.price }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="rating">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>Rating</mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let item">{{ item.rating }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="userReviews">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>User Reviews</mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let item"> <button mat-icon-button (click)="openUserReviewsDialog(item)">
+                <mat-icon>reviews</mat-icon>
+            </button></mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns" (click)="onRowClick(row)"></mat-row>
+</mat-table>
+
+<mat-paginator [pageSize]="5" [pageSizeOptions]="[1, 2, 4, 10, 20, 50, 100]" aria-label="Select page">
+</mat-paginator>
+
+<section fxLayoutAlign="space-between" [style.margin]="'8px'">
+    <button fxLayoutGap="15" mat-raised-button color="accent" (click)="addItem()">
+        ADD
+    </button>
+
+    <mat-form-field fxFlex="60%">
+        <input placeholder="Search" matInput type="text" (keyup)="doFilter($any($event.target).value)">
+    </mat-form-field>
+</section>

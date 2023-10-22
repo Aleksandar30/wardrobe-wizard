@@ -1,27 +1,76 @@
-
-mat-sidenav-container, mat-sidenav-content, mat-sidenav {
+/* Style the sidenav container */
+mat-sidenav-container {
     height: 100%;
+  }
   
-}
-
-mat-sidenav {
-    width: 240px;
-}
-mat-icon:hover {
-    cursor: pointer;
-    
-}
-mat-icon {
-    vertical-align: top;
-    margin-right: 10;
-}
-
-a {
-    color: white;
+  /* Style the toolbar */
+  mat-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+  }
+  
+  /* Style the toolbar title */
+  mat-toolbar a {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
     text-decoration: none;
-    
-}
-
-a :hover {
+  }
+  
+  img {
     cursor: pointer;
-}
+    width: 50px;
+    height: 50px;
+  }
+  /* Style the toolbar icon */
+  mat-toolbar mat-icon {
+    font-size: 30px;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  /* Style the toolbar links */
+  mat-toolbar a:not(:first-child) {
+    font-size: 18px;
+    color: #fff;
+    text-decoration: none;
+    margin-left: 20px;
+  }
+  
+  /* Style the toolbar cart icon */
+  mat-toolbar mat-icon:last-child {
+    font-size: 24px;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  /* Style the sidenav */
+  mat-sidenav {
+    width: 250px;
+  }
+  
+  /* Style the sidenav links */
+  mat-nav-list a {
+    font-size: 18px;
+    text-decoration: none;
+    color: #333;
+  }
+  
+  /* Style the sidenav button */
+  mat-nav-list button {
+    margin-top: 20px;
+  }
+  
+  /* Style the sidenav logout link */
+  mat-nav-list a:last-child {
+    margin-top: auto;
+  }
+
+  .admin-panel {
+    background-color: red;
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+

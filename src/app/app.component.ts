@@ -10,7 +10,8 @@ import { ProfileComponent } from './auth/profile/profile.component';
 })
 export class AppComponent {
   title = 'Wardrobe Wizard Shop';
-  profileOpened: boolean = false;
+
+
 
   constructor(public userService: UserService, private dialog: MatDialog) { }
 
@@ -20,7 +21,7 @@ export class AppComponent {
 
 
   openProfile(userId: number) {
-    this.profileOpened = true;
+
     const profileDialog = this.dialog.open(ProfileComponent, {
       disableClose: true,
       width: "40vw",
@@ -28,7 +29,7 @@ export class AppComponent {
     });
 
     profileDialog.afterClosed().subscribe(result => {
-      this.profileOpened = false;
+
     })
 
   }

@@ -1,0 +1,122 @@
+<div fxLayoutAlign="space-between">
+    <button mat-button [mat-dialog-close]="true">
+        <mat-icon matListIcon>close</mat-icon>
+    </button>
+
+
+</div>
+
+<mat-dialog-content>
+    <form fxLayout="column" fxLayoutGap="2vh" #f="ngForm" (ngSubmit)="finishEditing(f)">
+        <!-- ROLE -->
+        <mat-card>
+            <div fxLayoutGap="1vw" fxLayoutAlign="center center">
+
+                <mat-icon>person</mat-icon>
+                <mat-form-field fxFlex="100%" hintLabel="Users role">
+                    <input matInput type="text" placeholder="Role" ngModel name="role" minlegth="8" password required
+                        #roleInput="ngModel">
+                </mat-form-field>
+            </div>
+        </mat-card>
+
+
+        <!-- NAME -->
+        <mat-card>
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1vw">
+                <mat-icon>person</mat-icon>
+
+                <mat-form-field fxFlex="100%">
+                    <input matInput type="name" placeholder="Your name" ngModel name="name" required
+                        #nameInput="ngModel">
+                    <mat-hint align="end">Name</mat-hint>
+                    <mat-error *ngIf="nameInput.hasError('required')">Name is required</mat-error>
+
+                </mat-form-field>
+
+            </div>
+        </mat-card>
+        <!-- LAST NAME  -->
+        <mat-card>
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1vw">
+                <mat-icon>person</mat-icon>
+
+
+                <mat-form-field fxFlex="100%">
+                    <input matInput type="name" placeholder="Your last name" ngModel name="lastName" required
+                        #lastName="ngModel">
+                    <mat-hint align="end">Last Name</mat-hint>
+                    <mat-error *ngIf="lastName.hasError('required')">Last Name is required</mat-error>
+
+                </mat-form-field>
+
+            </div>
+        </mat-card>
+
+        <!-- ADRESS -->
+        <mat-card>
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1vw">
+                <mat-icon>house</mat-icon>
+
+                <mat-form-field fxFlex="100%">
+                    <input matInput type="text" placeholder="Your Address" ngModel name="address" required
+                        #address="ngModel">
+                    <mat-hint align="end">Address</mat-hint>
+                    <mat-error *ngIf="address.hasError('required')">Address is required</mat-error>
+
+                </mat-form-field>
+            </div>
+        </mat-card>
+
+        <mat-card>
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1vw">
+                <mat-icon>shopping_cart</mat-icon>
+
+
+
+                <mat-form-field fxFlex="100%">
+                    <mat-label>Clothing Type</mat-label>
+                    <mat-select name="clothingType">
+                        <mat-option value="casual">Casual</mat-option>
+                        <mat-option value="sports wear">Sports Wear</mat-option>
+                        <mat-option value="official">Official</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </mat-card>
+
+        <mat-card>
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1vw">
+                <mat-icon>mail</mat-icon>
+
+                <mat-form-field fxFlex="100%">
+                    <input matInput type="email" placeholder="Your email" ngModel name="email" email required
+                        #emailInput="ngModel">
+                    <mat-hint align="end">Email</mat-hint>
+                    <mat-error *ngIf="emailInput.hasError('required')">Email is required</mat-error>
+                    <mat-error *ngIf="!emailInput.hasError('required')">Email has incorrect format</mat-error>
+
+                </mat-form-field>
+
+            </div>
+        </mat-card>
+
+
+        <mat-card>
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1vw">
+
+                <mat-icon>lock</mat-icon>
+                <mat-form-field fxFlex="100%" hintLabel="Minimum 8 characters">
+                    <input matInput type="password" placeholder="Your password" ngModel name="password" minlegth="8"
+                        password required #passwordInput="ngModel">
+
+                    <mat-hint align="end">{{ passwordInput.value?.length }} / 8</mat-hint>
+                </mat-form-field>
+            </div>
+        </mat-card>
+
+        <button mat-raised-button [disabled]="f.invalid" type="submit" color="primary">Create user</button>
+    </form>
+
+
+</mat-dialog-content>

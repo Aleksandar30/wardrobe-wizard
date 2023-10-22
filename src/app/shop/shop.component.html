@@ -1,16 +1,11 @@
-<div fxLayout="rows" fxLayoutAlign="center center">
-    <!-- Name -->
-    <mat-form-field>
-        <input placeholder="Search By Name" matInput type="text" (keyup)="doFilter($any($event.target).value)">
-    </mat-form-field>
-
-    <button mat-icon-button (click)="showFilters = !showFilters">
-        <mat-icon>{{ showFilters ? 'close' : 'filter_list' }}</mat-icon>
-    </button>
-
-    <form fxLayout="column" *ngIf="showFilters" (ngSubmit)="applyFilters()">
-        <!-- Type -->
-        <div fxLayoutGap="15">
+<mat-sidenav #sidenav>
+    <a fxLayoutAlign="end">
+        <button mat-icon-button (click)="sidenav.toggle()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </a>
+    <mat-nav-list>
+        <form fxFlex fxLayout="column" (ngSubmit)="applyFilters() ; sidenav.close()">
             <mat-form-field>
                 <mat-select placeholder="Filter by Type" [(ngModel)]="typeFilterValue" name="typeFilter">
                     <mat-option *ngFor="let type of types" [value]="type">{{ type }}</mat-option>
@@ -37,40 +32,50 @@
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
-        </div>
-
-        <div fxLayoutGap="15" fxFlex="50%"> <!-- Price -->
+            <!-- Price -->
             <mat-form-field>
-                <input matInput type="text" name="priceFilterMin" [(ngModel)]="priceFilterMinValue"
+                <input matInput type="number" name="priceFilterMin" [(ngModel)]="priceFilterMinValue"
                     placeholder="Min Price">
             </mat-form-field>
             <mat-form-field>
-                <input matInput type="text" name="priceFilterMax" [(ngModel)]="priceFilterMaxValue"
+                <input matInput type="number" name="priceFilterMax" [(ngModel)]="priceFilterMaxValue"
                     placeholder="Max Price">
             </mat-form-field>
 
             <!-- Rating -->
             <mat-form-field>
-                <input matInput type="text" name="scoreFilterMin" [(ngModel)]="buyerScoreFilterMinValue"
+                <input matInput type="number" name="scoreFilterMin" [(ngModel)]="buyerScoreFilterMinValue"
                     placeholder="Min Score">
             </mat-form-field>
             <mat-form-field>
-                <input matInput type="text" name="scoreFilterMax" [(ngModel)]="buyerScoreFilterMaxValue"
+                <input matInput type="number" name="scoreFilterMax" [(ngModel)]="buyerScoreFilterMaxValue"
                     placeholder="Max Score">
             </mat-form-field>
-        </div>
-        <div fxLayoutAlign="center center">
-            <button color="accent" *ngIf="showFilters" mat-raised-button type="submit">Apply Filters</button>
-            <button *ngIf="showFilters" mat-raised-button type="button" style="margin-left: 10px;"
-                (click)="clearFilters()">Clear Filters</button>
-        </div>
-    </form>
 
-</div>
+
+            <button mat-button color="accent" type="submit">Apply Filters</button>
+            <button mat-button type="button" (click)="clearFilters() ; sidenav.close()">Clear Filters</button>
+        </form>
+    </mat-nav-list>
+</mat-sidenav>
+
+<section fxLayout="row" fxLayoutAlign="center top">
+    <!-- Name -->
+    <mat-form-field fxFlex=" 60%">
+        <input placeholder="Search By Name" matInput type="text" (keyup)="doFilter($any($event.target).value)"
+            #nameInput>
+        <button mat-icon-button matSuffix (click)="nameInput.value='' ; doFilter($any($event.target).value)">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+    <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>filter_list</mat-icon>
+    </button>
+</section>
 
 <mat-table matSort [dataSource]="shopItemsSource">
 
-    <!-- Genre -->
+    <!-- Name -->
     <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
         <mat-cell *matCellDef="let element">{{ element.name }}</mat-cell>
@@ -120,7 +125,7 @@
 
     <!-- Shopping Cart -->
     <ng-container matColumnDef="shoppingCart">
-        <mat-header-cell *matHeaderCellDef>Shop</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef>Buy / Review</mat-header-cell>
         <mat-cell *matCellDef="let element">
             <button mat-icon-button (click)="openAddToCartDialog(element)">
                 <mat-icon>{{ cartItems.has(element) ? 'edit' : 'shopping_cart' }}</mat-icon>
@@ -141,4 +146,4 @@
 </mat-table>
 
 
-<mat-paginator [pageSize]="5" [pageSizeOptions]="[1, 2, 4, 6, 10]"></mat-paginator>
+<mat-paginator [pageSize]="5" [pageSizeOptions]="[1, 2, 5, 10, 0]"></mat-paginator>

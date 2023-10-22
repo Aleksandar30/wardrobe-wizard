@@ -10,7 +10,7 @@
         </mat-form-field>
 
         <!-- Sifra i string interpolation -->
-        <mat-form-field hintLabel="Please enter minimum 8 characters.">
+        <mat-form-field hintLabel="Minimum 8 characters.">
             <input type="password" matInput placeholder="Your password" ngModel name="password" required minlength="8"
                 #passInput="ngModel">
             <mat-hint align="end">{{ passInput.value?.length }} / 8</mat-hint>

@@ -3,14 +3,14 @@ import { Order } from "./order.model";
 import { ClothingSize, ClothingType, Gender, OrderStatus } from "../enums";
 import { BehaviorSubject } from "rxjs";
 
-@Injectable({
-    providedIn: 'root'
-})
+// @Injectable({
+//     providedIn: 'root'
+// })
 export class OrderService {
 
 
     isBuyer(id: number, itemId: number): boolean {
-        return this.orders.some(order => order.userId === id && order.shopItem.id === itemId);
+        return this.orders.some(order => order.userId === id && order.status === OrderStatus.Delivered && order.shopItem.id === itemId);
     }
     private orders: Order[] = [
         {

@@ -22,6 +22,8 @@ export class ShopComponent implements OnInit {
   shopItemsSource = new MatTableDataSource<ShopItem>();
   showFilters = false;
 
+  zIndexValue = 0;
+
   displayedColumns = ['name', 'type', 'gender', 'size', 'manufacturer', 'productionDate', 'price', 'rating', 'shoppingCart'];
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -63,7 +65,7 @@ export class ShopComponent implements OnInit {
     this.cartService.getCartItems().subscribe(items => {
       this.cartItems = items;
     });
-    this.shopItemsSource.data = this.shopService.getShopItems();
+    this.shopItemsSource.data = this.shopService.getShopItemsC();
     this.manufacturers = this.shopItemsSource.data.map(item => item.manufacturer).filter((value, index, self) => self.indexOf(value) === index);
 
   }
@@ -126,15 +128,13 @@ export class ShopComponent implements OnInit {
   doFilter(filterValue: string) {
     this.titleFilterValue = filterValue;
 
-    console.log(this.manufacturers);
-
     this.applyFilters();
   }
 
 
-  //! This is badly written, but it works, so I'm not gonna touch it
-  //! I'm sorry for whoever has to read this
-  //! refactor this if you have time
+
+
+
   applyFilters() {
     this.shopItemsSource.filterPredicate = (item: ShopItem, filter: string) => {
       const filters = filter.split(',');
@@ -202,7 +202,7 @@ export class ShopComponent implements OnInit {
         }
       }
 
-
+      this.zIndexValue = 0;
       return match;
     };
 

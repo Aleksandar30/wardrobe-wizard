@@ -1,0 +1,45 @@
+<div fxLayoutAlign="space-between">
+    <button mat-button [mat-dialog-close]="true">
+        <mat-icon matListIcon>close</mat-icon>
+    </button>
+</div>
+
+<mat-dialog-content>
+    <form fxLayout="column" fxLayoutGap="2vh" #editForm="ngForm" (ngSubmit)="finishEditing(editForm)">
+        <!-- NAME -->
+        <mat-card>
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1vw">
+                <mat-form-field fxFlex="100%">
+                    <input matInput type="name" ngModel="{{itemForEdit.name}}" name="name" required
+                        #nameInput="ngModel">
+                    <mat-hint align="end">Name</mat-hint>
+                    <mat-error *ngIf="nameInput.hasError('required')">Name is required</mat-error>
+
+                </mat-form-field>
+
+            </div>
+        </mat-card>
+
+
+        <!-- Price -->
+        <mat-card>
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="1vw">
+                <mat-form-field fxFlex="100%" hintLabel="Item price">
+                    <input matInput type="number" name="price" minlegth="8" ngModel="{{itemForEdit.price}}" required
+                        #priceInput="ngModel">
+                </mat-form-field>
+            </div>
+        </mat-card>
+
+
+        <button mat-raised-button type="submit" color="primary" [mat-dialog-close]="true">Update item</button>
+
+        <button mat-button (click)="deleteItem()" [mat-dialog-close]="true">
+            Delete item
+        </button>
+
+
+    </form>
+
+
+</mat-dialog-content>
