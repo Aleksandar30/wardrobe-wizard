@@ -7,10 +7,13 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ClothingSize, ClothingType } from '../enums';
 import { filter } from 'rxjs';
 import { UserService } from '../auth/users.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { CartDialogComponent } from '../cart/cart-dialog/cart-dialog.component';
 import { CartService } from '../cart/cart.service';
 import { ReviewsComponent } from './reviews/reviews.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ContinueShopingDialogComponent } from './continue-shoping-dialog/continue-shoping-dialog.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-shop',
@@ -32,7 +35,9 @@ export class ShopComponent implements OnInit {
     private shopService: ShopService,
     private userService: UserService,
     private dialog: MatDialog,
-    private cartService: CartService,) { }
+    private router: Router,
+    private cartService: CartService,
+    private snackBar: MatSnackBar,) { }
 
   cartItems = new Map<ShopItem, number>();
 
@@ -88,10 +93,6 @@ export class ShopComponent implements OnInit {
     if (this.cartItems.has(item)) {
       isEditing = true;
     }
-
-
-
-
     const dialogRef = this.dialog.open(CartDialogComponent, {
       data: { item: item, isEditing: isEditing }
     });
@@ -103,6 +104,25 @@ export class ShopComponent implements OnInit {
           return;
         }
         this.addToCart(item, result.amount);
+        this.openContinueShoppingDialog();
+
+
+      }
+    });
+  }
+
+  openContinueShoppingDialog() {
+
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '500px';
+    dialogConfig.height = '200px';
+
+    const dialogRef = this.dialog.open(ContinueShopingDialogComponent,);
+
+    dialogRef.afterClosed().subscribe(toCheckout => {
+      if (toCheckout) {
+        this.router.navigate(["/cart"]);
+        console.log(toCheckout);
       }
     });
   }

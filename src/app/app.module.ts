@@ -28,6 +28,7 @@ import { OrdersPanelComponent } from './auth/admin-panel/orders-panel/orders-pan
 import { AddUserDialogComponent } from './auth/admin-panel/users-panel/add-user-dialog/add-user-dialog.component';
 import { AddShopItemDialogComponent } from './auth/admin-panel/shop-items-panel/add-shop-item-dialog/add-shop-item-dialog.component';
 import { EditShopItemDialogComponent } from './auth/admin-panel/shop-items-panel/edit-shop-item-dialog/edit-shop-item-dialog.component';
+import { ContinueShopingDialogComponent } from './shop/continue-shoping-dialog/continue-shoping-dialog.component';
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import { EditShopItemDialogComponent } from './auth/admin-panel/shop-items-panel
     OrdersPanelComponent,
     AddUserDialogComponent,
     AddShopItemDialogComponent,
-    EditShopItemDialogComponent
+    EditShopItemDialogComponent,
+    ContinueShopingDialogComponent
 
   ],
   imports: [
