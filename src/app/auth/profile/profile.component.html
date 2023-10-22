@@ -87,12 +87,12 @@
                 <mat-icon>shopping_cart</mat-icon>
 
                 <div fxLayout="column" *ngIf="!this.isEditing">
-                    <mat-card-subtitle>Clothing Type</mat-card-subtitle>
+                    <mat-card-subtitle>Favorite Clothing Type</mat-card-subtitle>
                     <span>{{ this.profileForInput.favoriteClothingType }}</span>
                 </div>
 
                 <mat-form-field fxFlex="100%" *ngIf="this.isEditing">
-                    <mat-label>Clothing Type</mat-label>
+                    <mat-label>Favorite Clothing Type</mat-label>
                     <mat-select [(ngModel)]="this.profileForInput.favoriteClothingType" name="clothingType">
                         <mat-option value="casual">Casual</mat-option>
                         <mat-option value="sports wear">Sports Wear</mat-option>
@@ -137,11 +137,9 @@
             </div>
         </mat-card>
 
-
-        <!-- Dugme, kao okidac funkcionalnost -->
         <button *ngIf="this.isEditing" mat-raised-button type="submit" color="primary">Update user</button>
 
-        <button *ngIf="this.isEditing" mat-button (click)="deleteUser()" [mat-dialog-close]="true">
+        <button *ngIf="this.isEditing" color="warn" mat-raised-button (click)="deleteUser()" [mat-dialog-close]="true">
             Delete user
         </button>
 

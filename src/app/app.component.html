@@ -32,7 +32,7 @@
         </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
-        <mat-toolbar color="primary">
+        <mat-toolbar>
             <mat-icon fxHide.gt-xs (click)="sidenav.toggle()">menu</mat-icon>
 
             <div routerLink="/" fxLayoutAlign="center center">
@@ -41,13 +41,13 @@
 
             </div>
             <div fxFlex fxLayoutAlign="end" fxLayoutGap="15px" fxHide.xs>
-                <a routerLink="/">Shop</a>
+                <a routerLink="/">SHOP</a>
                 <a routerLink="/cart" *ngIf="userService.currentUser"><mat-icon>shopping_cart</mat-icon></a>
                 <button mat-raised-button color="accent" *ngIf="userService.currentUser"
                     (click)="openProfile(this.userService.currentUser.id)">
                     {{ this.userService.currentUser.email }}
                 </button>
-                <a *ngIf="!userService.currentUser" routerLink="/login">Login</a>
+                <a *ngIf="!userService.currentUser" routerLink="/login">LOGIN </a>
                 <div>
                     <button routerLink="/admin-panel" color="warn" mat-raised-button color="warn"
                         *ngIf="userService.currentUser?.role === 'admin'">ADMIN PANEL</button>

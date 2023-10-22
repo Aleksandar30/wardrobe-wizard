@@ -1,27 +1,27 @@
-<table mat-table [dataSource]="orders" class="mat-elevation-z8">
-    <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef>Name</th>
-        <td mat-cell *matCellDef="let item">{{ item.shopItem.name }}</td>
+<mat-table matSort [dataSource]="orders" class="mat-elevation-z8">
+    <ng-container matColumnDef="shopItem">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>Shop Item</mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let order">{{ order.shopItem.name }}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef>Status</th>
-        <td mat-cell *matCellDef="let item">{{ item.status }}</td>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{ item.status }}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="amount">
-        <th mat-header-cell *matHeaderCellDef>Amount</th>
-        <td mat-cell *matCellDef="let item">{{ item.amount }}</td>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Amount</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{ item.amount }}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="remove">
-        <th mat-header-cell *matHeaderCellDef>Remove</th>
-        <td mat-cell *matCellDef="let item">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Remove</mat-header-cell>
+        <mat-cell *matCellDef="let item">
             <button mat-icon-button color="warn" (click)="removeFromCart(item)">
                 <mat-icon>remove_shopping_cart</mat-icon>
             </button>
-        </td>
+        </mat-cell>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns">
-    </tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns">
-    </tr>
-</table>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let rows; columns: displayedColumns"></mat-row>
+</mat-table>
+
+<mat-paginator [pageSize]="5" [pageSizeOptions]="[1, 2, 5, 10, 0]"></mat-paginator>

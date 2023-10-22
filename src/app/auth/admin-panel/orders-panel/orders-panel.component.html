@@ -32,10 +32,12 @@
         <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
         <mat-cell *matCellDef="let item">
             <mat-form-field>
-                <mat-select placeholder="IN PROGRESS" [(ngModel)]="item.status"
+                <mat-select [(ngModel)]="item.status" placeholder="{{item.status}}"
                     (selectionChange)="updateOrderStatus(item)">
+
                     <mat-option value="Canceled">CANCELED</mat-option>
                     <mat-option value="Delivered">DELIVERED</mat-option>
+                    <mat-option value="Shipped">IN PROGRESS</mat-option>
                 </mat-select>
             </mat-form-field>
         </mat-cell>

@@ -9,6 +9,7 @@ mat-sidenav-container {
     justify-content: space-between;
     align-items: center;
     padding: 0 20px;
+    background-color: black;
   }
   
   /* Style the toolbar title */
