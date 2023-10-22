@@ -1,11 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
-import { UserService } from '../../users.service';
+import { UserService } from '../../../users.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ShopItem } from 'src/app/shop/shop-item.model';
 import { NgForm } from '@angular/forms';
 import { ShopService } from 'src/app/shop/shop.service';
-import { ConfirmDialogComponent } from '../../profile/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from '../../../profile/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-edit-shop-item-dialog',

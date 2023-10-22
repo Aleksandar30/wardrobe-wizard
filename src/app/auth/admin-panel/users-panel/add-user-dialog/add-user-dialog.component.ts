@@ -1,10 +1,10 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
-import { UserService } from '../../users.service';
+import { UserService } from '../../../users.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { User } from '../../user.model';
+import { User } from '../../../user.model';
 
 @Component({
   selector: 'app-add-user-dialog',

@@ -7,8 +7,8 @@ import { UserService } from '../../users.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ShopService } from 'src/app/shop/shop.service';
 import { ReviewsComponent } from 'src/app/shop/reviews/reviews.component';
-import { AddShopItemDialogComponent } from '../add-shop-item-dialog/add-shop-item-dialog.component';
-import { EditShopItemDialogComponent } from '../edit-shop-item-dialog/edit-shop-item-dialog.component';
+import { AddShopItemDialogComponent } from './add-shop-item-dialog/add-shop-item-dialog.component';
+import { EditShopItemDialogComponent } from './edit-shop-item-dialog/edit-shop-item-dialog.component';
 
 @Component({
   selector: 'app-shop-items-panel',

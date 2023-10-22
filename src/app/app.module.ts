@@ -25,9 +25,9 @@ import { AdminPanelComponent } from './auth/admin-panel/admin-panel.component';
 import { UsersPanelComponent } from './auth/admin-panel/users-panel/users-panel.component';
 import { ShopItemsPanelComponent } from './auth/admin-panel/shop-items-panel/shop-items-panel.component';
 import { OrdersPanelComponent } from './auth/admin-panel/orders-panel/orders-panel.component';
-import { AddUserDialogComponent } from './auth/admin-panel/add-user-dialog/add-user-dialog.component';
-import { AddShopItemDialogComponent } from './auth/admin-panel/add-shop-item-dialog/add-shop-item-dialog.component';
-import { EditShopItemDialogComponent } from './auth/admin-panel/edit-shop-item-dialog/edit-shop-item-dialog.component';
+import { AddUserDialogComponent } from './auth/admin-panel/users-panel/add-user-dialog/add-user-dialog.component';
+import { AddShopItemDialogComponent } from './auth/admin-panel/shop-items-panel/add-shop-item-dialog/add-shop-item-dialog.component';
+import { EditShopItemDialogComponent } from './auth/admin-panel/shop-items-panel/edit-shop-item-dialog/edit-shop-item-dialog.component';
 
 
 @NgModule({

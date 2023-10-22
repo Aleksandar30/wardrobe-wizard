@@ -1,1 +1,56 @@
-<p>orders-panel works!</p>
+<section [style.margin-left]="'8px'" fxLayout="row" fxLayoutAlign="start">
+    <h2 fxLayoutGap>Click order to edit details</h2>
+</section>
+
+<mat-table [dataSource]="orders" matSort class="mat-elevation-z8">
+    <ng-container matColumnDef="id">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let order">{{ order.id }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="userId">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>User Id</mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let order">{{ order.userId }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="shopItem">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>Shop Item</mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let order">{{ order.shopItem.name }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="amount">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>Amount</mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let order">{{ order.amount }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>Price</mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let order">{{ order.price }}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+        <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+        <mat-cell *matCellDef="let item">
+            <mat-form-field>
+                <mat-select placeholder="IN PROGRESS" [(ngModel)]="item.status"
+                    (selectionChange)="updateOrderStatus(item)">
+                    <mat-option value="Canceled">CANCELED</mat-option>
+                    <mat-option value="Delivered">DELIVERED</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+</mat-table>
+
+<mat-paginator [pageSize]="5" [pageSizeOptions]="[1,2, 4, 10, 20, 50, 100]" aria-label="Select page">
+</mat-paginator>
+
+<section fxLayoutAlign="space-between" [style.margin]="'8px'">
+
+    <mat-form-field fxFlex="60%">
+        <input placeholder="Search By User Id" matInput type="text" (keyup)="doFilter($any($event.target).value)">
+    </mat-form-field>
+</section>
