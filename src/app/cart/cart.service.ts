@@ -51,6 +51,7 @@ export class CartService {
                 this.cartItemsPrice -= item.price * amount;
             }
             this.cartItems.delete(item);
+            this.cartItemsPrice = 0;
             this.cartItemsSubject.next(this.cartItems);
 
         }
@@ -60,11 +61,14 @@ export class CartService {
         if (this.cartItems.has(item)) {
             const oldAmount = this.cartItems.get(item);
             if (typeof oldAmount !== 'undefined') {
-                this.cartItemsPrice -= item.price * oldAmount;
+                if (newAmount < oldAmount) {
+                    this.cartItemsPrice -= item.price * (oldAmount - newAmount);
+                } else {
+                    this.cartItemsPrice += item.price * (newAmount - oldAmount);
+                }
             }
 
             this.cartItems.set(item, newAmount);
-            this.cartItemsPrice += item.price * newAmount;
             this.cartItemsSubject.next(this.cartItems);
         }
     }

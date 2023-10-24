@@ -30,7 +30,6 @@ import { AddShopItemDialogComponent } from './auth/admin-panel/shop-items-panel/
 import { EditShopItemDialogComponent } from './auth/admin-panel/shop-items-panel/edit-shop-item-dialog/edit-shop-item-dialog.component';
 import { ContinueShopingDialogComponent } from './shop/continue-shoping-dialog/continue-shoping-dialog.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -63,6 +62,7 @@ import { ContinueShopingDialogComponent } from './shop/continue-shoping-dialog/c
     RoutingModule,
     FormsModule,
     FlexLayoutModule,
+
   ],
   providers: [ShopService, UserService, CartService, OrderService],
   bootstrap: [AppComponent]

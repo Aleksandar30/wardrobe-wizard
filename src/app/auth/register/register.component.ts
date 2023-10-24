@@ -42,6 +42,8 @@ export class RegisterComponent {
         form.value.password,
         this.mapStatusToEnum(form.value.type)
       );
+
+      this.userService.currentUser = newUser;
       this.router.navigate(['']);
     } else {
       this.errorExists = true;

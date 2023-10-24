@@ -5,7 +5,6 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { ClothingSize, ClothingType } from '../enums';
-import { filter } from 'rxjs';
 import { UserService } from '../auth/users.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { CartDialogComponent } from '../cart/cart-dialog/cart-dialog.component';
@@ -58,6 +57,7 @@ export class ShopComponent implements OnInit {
   addToCart(item: ShopItem, amount: number) {
     this.cartItems.set(item, amount);
     this.cartService.addToCart(item, amount);
+
   }
 
   removeFromCart(item: ShopItem) {

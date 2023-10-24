@@ -1,7 +1,5 @@
 import { BehaviorSubject } from "rxjs";
-import { Order } from "../cart/order.model";
-import { ClothingSize, ClothingType, Gender, OrderStatus } from "../enums";
-import { ShopItem } from "../shop/shop-item.model";
+import { ClothingType } from "../enums";
 import { User } from "./user.model";
 
 export class UserService {
@@ -82,6 +80,9 @@ export class UserService {
         return user;
 
     }
+
+
+
 
     isPasswordCorrect(userEmail: string, password: string): boolean {
         var hasCorrectCredentials: boolean = this.dummyUserList.find(userToFind =>
